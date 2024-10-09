@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Watermarking</title>
+</head>
+<body>
+    <h1>ฝังลายน้ำในภาพ</h1>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="original_image" required>
+        <input type="file" name="watermark_image" required>
+        <input type="number" name="strength" step="0.01" min="0" max="1" value="0.2" required>
+        <input type="submit" value="Embed Watermark">
+    </form>
+
+    {% if result_image %}
+        <h2>ภาพที่มีลายน้ำ:</h2>
+        <img src="{{ url_for('send_watermarked_file', filename=result_image) }}" alt="Watermarked Image">
+    {% endif %}
+
+    <h1>ลบลายน้ำจากภาพ</h1>
+    <form action="{{ url_for('remove') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="watermarked_image" required>
+        <input type="submit" value="Remove Watermark">
+    </form>
+
+    {% if original_image %}
+        <h2>ภาพที่ไม่มีลายน้ำ:</h2>
+        <img src="{{ url_for('send_watermarked_file', filename=original_image) }}" alt="Original Image">
+    {% endif %}
+</body>
+</html>
